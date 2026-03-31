@@ -9,7 +9,45 @@ const jwt = require("jsonwebtoken");
 const loginUser = async (req, res) => {
     try {
 
+        const {email, password} = req.body;
 
+        //check
+        if(!email || !password) {
+            return res.status(400).json({message: "All field required !"});
+        }
+
+        //Find user in DB
+
+        const user = await User.findOne({ email });
+
+        //if user not found
+        if(!user) {
+            return res.status(400).json({message: "User not found"});
+        }
+
+        //compaare password
+        //Compares entered password with hashed password in DB.
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch) {
+            return res.status(400).json({message: "Invalid Paswsword"});
+        }
+        
+        //Generate JWT token - for 30 days
+        const token = jwt.sign(
+            {id: user._id},
+            "secret",
+            {expiresIn: "30d"}
+    );
+
+    // Send success response
+    //Sends user data + token to frontend.
+    res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        token: token
+    });
 
     } catch(err) {
         res.status(500).json({message: "Server Error"})
@@ -22,6 +60,8 @@ const getAllUsers = async (req, res) => {
 
         res.json(users);
     }
+
+    //Get data → Check → Find user → Match password → Create token → Send response
 
     catch (err) {
         res.status(500).json({ message: "Server Error" })
