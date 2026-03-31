@@ -4,13 +4,37 @@ const jwt = require("jsonwebtoken");
 
 // @desc Register user
 // @route POST /api/auth/register
+
+
+const loginUser = async (req, res) => {
+    try {
+
+
+
+    } catch(err) {
+        res.status(500).json({message: "Server Error"})
+    }
+}
+
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+
+        res.json(users);
+    }
+
+    catch (err) {
+        res.status(500).json({ message: "Server Error" })
+    }
+}
+
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
         if (!name || !email || !password) {
-    return res.status(400).json({ message: "All fields required" });
-}
+            return res.status(400).json({ message: "All fields required" });
+        }
 
         // 1️⃣ Check if user exists
         const userExists = await User.findOne({ email });
@@ -43,4 +67,4 @@ const registerUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser };
+module.exports = { registerUser, getAllUsers, loginUser};
