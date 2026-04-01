@@ -6,6 +6,21 @@ const jwt = require("jsonwebtoken");
 // @route POST /api/auth/register
 
 
+const getMe = async (req, res) => {
+
+   try {
+
+    const user = await User.findById((req.user.id)).select("-password");
+
+    res.status(200).json(user);
+
+   } catch(err) {
+    res.status(500).json({message: "Server Error"});
+   }
+
+} 
+
+
 const loginUser = async (req, res) => {
     try {
 
@@ -107,4 +122,4 @@ const registerUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, getAllUsers, loginUser};
+module.exports = { registerUser, getAllUsers, loginUser, getMe};
