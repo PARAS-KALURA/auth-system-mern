@@ -49,11 +49,10 @@ const loginUser = async (req, res) => {
         }
         
         //Generate JWT token - for 30 days
-        const token = jwt.sign(
-            {id: user._id},
-            "secret",
-            {expiresIn: "30d"}
-    );
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  expiresIn: "30d",
+  
+});
 
     // Send success response
     //Sends user data + token to frontend.

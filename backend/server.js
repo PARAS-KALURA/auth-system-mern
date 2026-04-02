@@ -1,10 +1,10 @@
+require("dotenv").config(); // ✅ keep this ONCE at top
+
 const express = require("express");
-const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 
-dotenv.config();
 connectDB();
 
 const app = express();
