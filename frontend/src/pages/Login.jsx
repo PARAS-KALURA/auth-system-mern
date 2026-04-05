@@ -7,12 +7,42 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
+const [error, setError] = useState("");
 
-const handleClick = () => {
-  console.log(username, password)
-  setPassword("");
-  setUsername("");
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+ //1. check empty 
+
+  if(!username || !password){
+    setError("All fields required");
+    return;
+  }
+
+  // 2. username validation
+
+  if(username.length < 3){
+    setError("username must be alteast 3 characters");
+    return;
+  }
+
+  //3. Passwrod validation
+
+  if(password.length < 6){
+        setError("Password must be at least 6 characters");
+        return;
+  }
+
+  //success
+  setError(""); // clear error
+  console.log("Login Successfull");
+  
+
+setUsername("")
+setPassword("")
 }
+
   return (
     <div className='flex min-h-screen  bg-gradient-to-r from-[#524be6] to-[#7d87f8]'>
       
@@ -27,9 +57,16 @@ const handleClick = () => {
       
       {/* Right Div */}
      <div className='w-full md:w-1/2 min-h-screen flex  justify-center md:items-end items-center' >
+     <form onSubmit={handleSubmit} >
      <div className='bg-white w-[370px] h-[480px] rounded-xl md:rounded-t-xl md:rounded-b-none p-8 shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.40)] transition-all duration-300' >
       <h2 className='text-2xl text-center font-semibold' >Welcome Back</h2>
       <p className='text-gray-600 text-[10px] text-center pt-2 pb-6' >Let get started wit hyour 30 days free trial</p>
+      {error && (
+  <p className="border border-red-500 text-red-500 rounded-xl px-4 py-2 w-full mb-4 text-sm text-center">
+    {error}
+  </p>
+)}
+      
       <input
       type="text"
       placeholder='Username' 
@@ -44,12 +81,16 @@ const handleClick = () => {
        onChange={(e) => setPassword(e.target.value)}
       className='border border-gray-300 rounded-xl px-4 py-2 w-full'
       />
-      <button className='text-blue-500 mb-5 text-xs w-full text-center cursor-pointer hover:text-blue-900'>Forget Password?</button>
+      <button
+      type='button'
+      className='text-blue-500 mb-5 text-xs w-full text-center cursor-pointer hover:text-blue-900'>Forget Password?</button>
       
 
       <button
-      onClick={handleClick}
+      type='submit'
       className='bg-blue-500 px-4 py-2 text-white text-center active:scale-95 transition-all duration-150 w-full rounded-xl cursor-pointer hover:bg-blue-600'>Login</button>
+
+     
 
       <div className="flex items-center gap-2 my-4 mt-12">
   <div className="flex-1 h-px bg-gray-300"></div>
@@ -68,8 +109,11 @@ const handleClick = () => {
         <button className='text-blue-800 font-semibold cursor-pointer' >Sign Up</button>
       </div>
       
+
      </div>
+     </form>
      </div>
+     
 
      
 
