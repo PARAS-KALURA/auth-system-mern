@@ -9,6 +9,10 @@ const Login = () => {
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
 
+const fakeUser = {
+  username: "Paras Kalura",
+  password: "Paras@123"
+}
 
 const handleSubmit = (e) => {
   e.preventDefault();
@@ -34,9 +38,21 @@ const handleSubmit = (e) => {
         return;
   }
 
+  if(
+    username === fakeUser.username &&
+    password === fakeUser.password
+  ) {
+    console.log("Successfully Login ✅");
+    
+  } else{
+    setError("Invalid Credentials");
+    return;
+  }
+  
+
   //success
   setError(""); // clear error
-  console.log("Login Successfull");
+  console.log("Login Successfully");
   
 
 setUsername("")
@@ -61,11 +77,7 @@ setPassword("")
      <div className='bg-white w-[370px] h-[480px] rounded-xl md:rounded-t-xl md:rounded-b-none p-8 shadow-[0_30px_80px_rgba(0,0,0,0.25)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.40)] transition-all duration-300' >
       <h2 className='text-2xl text-center font-semibold' >Welcome Back</h2>
       <p className='text-gray-600 text-[10px] text-center pt-2 pb-6' >Let get started wit hyour 30 days free trial</p>
-      {error && (
-  <p className="border border-red-500 text-red-500 rounded-xl px-4 py-2 w-full mb-4 text-sm text-center">
-    {error}
-  </p>
-)}
+     
       
       <input
       type="text"
@@ -86,9 +98,11 @@ setPassword("")
       className='text-blue-500 mb-5 text-xs w-full text-center cursor-pointer hover:text-blue-900'>Forget Password?</button>
       
 
-      <button
+      {error ? <p className="border border-red-500 text-white bg-red-500 rounded-xl px-4 py-2 w-full mb-4 text-sm text-center">
+    {error}
+  </p> : <button
       type='submit'
-      className='bg-blue-500 px-4 py-2 text-white text-center active:scale-95 transition-all duration-150 w-full rounded-xl cursor-pointer hover:bg-blue-600'>Login</button>
+      className='bg-blue-500 px-4 py-2 text-white text-center active:scale-95 transition-all duration-150 w-full rounded-xl cursor-pointer hover:bg-blue-600'>Login</button> }
 
      
 
