@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 
 
 const Login = () => {
 
 
-  const [username, setUsername] = useState("");
+const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
 const [error, setError] = useState("");
+
+const navigate = useNavigate();
 
 const fakeUser = {
   username: "Paras Kalura",
@@ -48,10 +51,13 @@ const handleSubmit = (e) => {
     setError("Invalid Credentials");
     return;
   }
+
   
+  localStorage.setItem("isAuth", "true");
 
   //success
   setError(""); // clear error
+  navigate("/dashboard");
   console.log("Login Successfully");
   
 
