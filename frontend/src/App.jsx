@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard'
 
 const App = () => {
   return (
-    <div><Login /></div>
+    <div><Dashboard /></div>
   )
 }
 
