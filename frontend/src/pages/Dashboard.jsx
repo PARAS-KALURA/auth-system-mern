@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Dashboard = () => {
+
+  const [openform, setOpenForm] = useState(false);
 
 
   const data = [
@@ -31,7 +33,66 @@ const Dashboard = () => {
     <div className='bg-gray-100 min-h-screen'>
       <div className='flex justify-between px-5 py-10'>
         <h3 className='font-semibold text-2xl' >Current Leads</h3>
-        <button className='bg-[#4e19ff] text-white rounded-sm px-2 py-1 font-semibold cursor-pointer active:scale-90 transition-all duration-120' >Add New +</button>
+        <button 
+        onClick={(() => setOpenForm(true))}
+        className='bg-[#4e19ff] text-white rounded-sm px-2 py-1 font-semibold cursor-pointer active:scale-90 transition-all duration-120' >Add New +</button>
+
+        {openform && (
+          <div 
+          onClick={() => setOpenForm(false)}
+          className='fixed inset-0 bg-black/40 flex justify-center items-center'>
+
+            {/* main card */}
+
+            <div
+            onClick={(e) => e.stopPropagation()}
+            className='bg-white w-[350px] p-6 rounded-xl space-y-4' >
+              <h2 className='text-center font-bold text-xl'>Add Lead</h2>
+
+              <input 
+              className='px-4 py-2 border border-1 border-gray-200 rounded w-full'
+              type="text"
+              placeholder='Enter Name'
+               />
+
+                <input 
+              className='px-4 py-2 border border-1 border-gray-200 rounded w-full'
+              type="text"
+              placeholder='Enter Email'
+               />
+
+             <select
+             placeholder = "Status"
+             className='px-4 py-2 border border-1 border-gray-200 rounded w-full'>
+             <option>Status</option>
+             <option>Done</option>
+             <option>In Progress</option>
+             <option>Pending</option>
+             <option>Not Interested</option>
+</select>
+
+           {/* auto-date */}
+
+           <p className='text-sm text-gray-500' >
+            Date: {new Date().toDateString()}</p>
+
+            <div className='flex justify-between'>
+
+              <button
+              onClick={() => setOpenForm(false)}
+              className='text-white bg-red-600 rounded font-semibold px-3 py-1 active:scale-90 transition-all duration-120 cursor-pointer' >Cancel</button> 
+              
+              <button
+              className='bg-[#4e19ff] text-white rounded-sm px-2 py-1 font-semibold cursor-pointer active:scale-90 transition-all duration-120'
+              >Add</button>
+
+            </div>
+              
+            </div>
+
+          </div>
+
+        )}
 
       </div>
 
