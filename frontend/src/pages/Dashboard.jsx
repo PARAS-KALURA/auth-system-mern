@@ -142,7 +142,20 @@ const Dashboard = () => {
             <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.name}</span>
             <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.email}</span>
             <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.date}</span>
-            <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.status}</span>
+<span 
+  className={`py-5 text-sm cursor-pointer 
+    ${
+      item.status === "Done"
+        ? "text-green-500"
+        : item.status === "In Progress"
+        ? "text-blue-500"
+        : item.status === "Not Interested"
+        ? "text-gray-900": "text-gray-600"
+    }`}
+>
+  {item.status}
+</span>
+
             <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.assigned}</span>
             <span className='py-5 text-sm cursor-pointer text-gray-600'>🗑️</span>
             </div>
