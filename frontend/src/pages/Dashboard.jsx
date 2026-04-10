@@ -3,9 +3,12 @@ import React, { useState } from 'react'
 const Dashboard = () => {
 
   const [openform, setOpenForm] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("");
 
 
-  const data = [
+  const [data, setData] = useState([
     {
       name: "Michael",
       email: "michael@gmail.com",
@@ -27,7 +30,7 @@ const Dashboard = () => {
       status: "Sold",
       assigned: "Funke"
     }
-  ]
+  ])
 
   return (
     <div className='bg-gray-100 min-h-screen'>
@@ -50,18 +53,24 @@ const Dashboard = () => {
               <h2 className='text-center font-bold text-xl'>Add Lead</h2>
 
               <input 
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className='px-4 py-2 border border-1 border-gray-200 rounded w-full'
               type="text"
               placeholder='Enter Name'
                />
 
                 <input 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               className='px-4 py-2 border border-1 border-gray-200 rounded w-full'
               type="text"
               placeholder='Enter Email'
                />
 
              <select
+             value={status}
+             onChange={(e) => setStatus(e.target.value)}
              placeholder = "Status"
              className='px-4 py-2 border border-1 border-gray-200 rounded w-full'>
              <option>Status</option>
@@ -83,6 +92,17 @@ const Dashboard = () => {
               className='text-white bg-red-600 rounded font-semibold px-3 py-1 active:scale-90 transition-all duration-120 cursor-pointer' >Cancel</button> 
               
               <button
+              onClick={() => {
+                const newLead = {
+                  name:name,
+                  email:email,
+                  status:status,
+                  date: new Date().toDateString(),
+                  assigned:"You"
+                }
+                setData([...data, newLead])
+                setOpenForm(false);
+              }}
               className='bg-[#4e19ff] text-white rounded-sm px-2 py-1 font-semibold cursor-pointer active:scale-90 transition-all duration-120'
               >Add</button>
 
