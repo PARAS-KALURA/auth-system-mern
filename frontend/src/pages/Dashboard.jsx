@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import image from '../images/delete.png'
 
 const Dashboard = () => {
 
@@ -31,6 +32,11 @@ const Dashboard = () => {
       assigned: "Funke"
     }
   ])
+
+  const handleDelete = (i) => {
+    const newData = data.filter((item,index) => index !== i )
+    setData(newData);
+  }
 
   return (
     <div className='bg-gray-100 min-h-screen'>
@@ -157,7 +163,10 @@ const Dashboard = () => {
 </span>
 
             <span className='py-5 text-sm cursor-pointer text-gray-600'>{item.assigned}</span>
-            <span className='py-5 text-sm cursor-pointer text-gray-600'>🗑️</span>
+            <div className='flex items-center' >
+            <img 
+            onClick={() => handleDelete(index)}
+            src={image} alt="delete" className='w-6 h-5 cursor-pointer hover:scale-115 transition-all duration-100 active:scale-95' /> </div>
             </div>
           ) )}
 
