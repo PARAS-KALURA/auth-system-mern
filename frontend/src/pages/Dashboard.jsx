@@ -9,29 +9,7 @@ const Dashboard = () => {
   const [status, setStatus] = useState("");
 
 
-  const [data, setData] = useState([
-    {
-      name: "Michael",
-      email: "michael@gmail.com",
-      date: "Jan 04",
-      status: "Not Interested",
-      assigned: "Lawson"
-    },
-    {
-      name: "Lindsay",
-      email: "lindsay@gmail.com",
-      date: "Dec 30",
-      status: "In Progress",
-      assigned: "Ferguson"
-    },
-    {
-      name: "Tobias",
-      email: "tobias@gmail.com",
-      date: "Dec 25",
-      status: "Sold",
-      assigned: "Funke"
-    }
-  ])
+  const [data, setData] = useState([])
 
   const handleDelete = (i) => {
     const newData = data.filter((item,index) => index !== i )

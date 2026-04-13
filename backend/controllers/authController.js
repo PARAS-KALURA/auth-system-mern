@@ -1,3 +1,6 @@
+// Logic of your app
+// What to do when API is called
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -8,27 +11,27 @@ const jwt = require("jsonwebtoken");
 
 const getMe = async (req, res) => {
 
-   try {
+    try {
 
-    const user = await User.findById((req.user.id)).select("-password");
+        const user = await User.findById((req.user.id)).select("-password");
 
-    res.status(200).json(user);
+        res.status(200).json(user);
 
-   } catch(err) {
-    res.status(500).json({message: "Server Error"});
-   }
+    } catch (err) {
+        res.status(500).json({ message: "Server Error" });
+    }
 
-} 
+}
 
 
 const loginUser = async (req, res) => {
     try {
 
-        const {email, password} = req.body;
+        const { email, password } = req.body;
 
         //check
-        if(!email || !password) {
-            return res.status(400).json({message: "All field required !"});
+        if (!email || !password) {
+            return res.status(400).json({ message: "All field required !" });
         }
 
         //Find user in DB
@@ -36,35 +39,35 @@ const loginUser = async (req, res) => {
         const user = await User.findOne({ email });
 
         //if user not found
-        if(!user) {
-            return res.status(400).json({message: "User not found"});
+        if (!user) {
+            return res.status(400).json({ message: "User not found" });
         }
 
         //compaare password
         //Compares entered password with hashed password in DB.
         const isMatch = await bcrypt.compare(password, user.password);
 
-        if(!isMatch) {
-            return res.status(400).json({message: "Invalid Paswsword"});
+        if (!isMatch) {
+            return res.status(400).json({ message: "Invalid Paswsword" });
         }
-        
+
         //Generate JWT token - for 30 days
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-  expiresIn: "30d",
-  
-});
+            expiresIn: "30d",
 
-    // Send success response
-    //Sends user data + token to frontend.
-    res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        token: token
-    });
+        });
 
-    } catch(err) {
-        res.status(500).json({message: "Server Error"})
+        // Send success response
+        //Sends user data + token to frontend.
+        res.json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            token: token
+        });
+
+    } catch (err) {
+        res.status(500).json({ message: "Server Error" })
     }
 }
 
@@ -121,4 +124,4 @@ const registerUser = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, getAllUsers, loginUser, getMe};
+module.exports = { registerUser, getAllUsers, loginUser, getMe };

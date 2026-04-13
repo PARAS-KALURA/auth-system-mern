@@ -1,3 +1,6 @@
+// Runs before main logic
+// Gatekeeper / security layer
+
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User")
