@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import API from "../api/api";
 
 
 
@@ -12,58 +13,40 @@ const [error, setError] = useState("");
 
 const navigate = useNavigate();
 
-const fakeUser = {
-  username: "Paras Kalura",
-  password: "Paras@123"
-}
-
-const handleSubmit = (e) => {
+const handleSubmit = async(e) => {
+  
   e.preventDefault();
-
- //1. check empty 
 
   if(!username || !password){
     setError("All fields required");
     return;
   }
 
-  // 2. username validation
+  try{
+    const res = await API.post("/login", {
+     username,
+     password,
+    });
 
-  if(username.length < 3){
-    setError("username must be alteast 3 characters");
-    return;
-  }
+    console.log(res.data);
+     
 
-  //3. Passwrod validation
-
-  if(password.length < 6){
-        setError("Password must be at least 6 characters");
-        return;
-  }
-
-  if(
-    username === fakeUser.username &&
-    password === fakeUser.password
-  ) {
-    console.log("Successfully Login ✅");
+//     This token = user logged in
+// Later used for protected routes
+    localStorage.setItem("token", res.data.token);
     
-  } else{
-    setError("Invalid Credentials");
-    return;
+    setError("");
+     setUsername("");
+    setPassword("");
+    navigate("/dashboard");
+
+   
+
+  } catch(err) {
+    setError(err.response?.data?.message || "Login failed"); // Show real error otherwise show default error
   }
-
-  
-  localStorage.setItem("isAuth", "true");
-
-  //success
-  setError(""); // clear error
-  navigate("/dashboard");
-  console.log("Login Successfully");
-  
-
-setUsername("")
-setPassword("")
 }
+
 
   return (
     <div className='flex min-h-screen  bg-gradient-to-r from-[#524be6] to-[#7d87f8]'>
@@ -104,12 +87,17 @@ setPassword("")
       className='text-blue-500 mb-5 text-xs w-full text-center cursor-pointer hover:text-blue-900'>Forget Password?</button>
       
 
-      {error ? <p className="border border-red-500 text-white bg-red-500 rounded-xl px-4 py-2 w-full mb-4 text-sm text-center">
+      {error && (
+  <p className="border border-red-500 text-white bg-red-500 rounded-xl px-4 py-2 w-full mb-4 text-sm text-center">
     {error}
-  </p> : <button
-      type='submit'
-      className='bg-blue-500 px-4 py-2 text-white text-center active:scale-95 transition-all duration-150 w-full rounded-xl cursor-pointer hover:bg-blue-600'>Login</button> }
+  </p>
+)}
 
+<button
+  type='submit'
+  className='bg-blue-500 px-4 py-2 text-white text-center active:scale-95 transition-all duration-150 w-full rounded-xl cursor-pointer hover:bg-blue-600'>
+  Login
+</button>
      
 
       <div className="flex items-center gap-2 my-4 mt-12">
