@@ -33,7 +33,7 @@ const handleSubmit = async(e) => {
 
 //     This token = user logged in
 // Later used for protected routes
-    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("token", res.data.token); //Store the login token in browser so user stays logged in 
     
     setError("");
      setUsername("");
