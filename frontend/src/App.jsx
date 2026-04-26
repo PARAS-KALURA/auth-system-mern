@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React from 'react'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import ProtectedRoute from "./components/ProtectedRoute";
 
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
     <BrowserRouter>
     <Routes>
       <Route path="/" element = {<Login/>} /> 
-      <Route path="/dashboard" element = {<Dashboard/>} />
+      <Route path="/dashboard" element =  {<ProtectedRoute> <Dashboard/> </ProtectedRoute>} />
     </Routes>
     </BrowserRouter>
   )
